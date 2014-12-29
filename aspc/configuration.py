@@ -145,7 +145,7 @@ SESSION_SERIALIZER = 'django.contrib.sessions.serializers.PickleSerializer'
 # more details on how to customize your logging configuration.
 LOGGING = {
 	'version': 1,
-	'disable_existing_loggers': False,
+	'disable_existing_loggers': True,
 	'formatters': {
 		'verbose': {
 			'format': '%(levelname)s %(asctime)s %(module)s %(process)d %(thread)d %(message)s'
@@ -170,6 +170,14 @@ LOGGING = {
 			'class':'logging.StreamHandler',
 			'formatter': 'simple'
 		},
+		'logfile': {
+			'level':'DEBUG',
+			'class':'logging.handlers.RotatingFileHandler',
+			'filename': PROJECT_ROOT + '/../log/django.log',
+			'maxBytes': 50000,
+			'backupCount': 2,
+			'formatter': 'verbose',
+		},
 	},
 	'loggers': {
 		'django.request': {
@@ -178,7 +186,7 @@ LOGGING = {
 			'propagate': True,
 		},
 		'aspc': {
-			'handlers': ['console'],
+			'handlers': ['console', 'logfile'],
 			'level': 'DEBUG',
 		}
 	}
